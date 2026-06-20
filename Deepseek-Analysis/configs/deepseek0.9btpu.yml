@@ -1,0 +1,41 @@
+model:
+  name: deepseek-moe-0.9b
+
+architecture:
+  vocab_size: 32000
+  hidden_size: 512
+  num_layers: 12
+  num_attention_heads: 16
+  num_key_value_heads: 8
+  max_position_embeddings: 2048
+  rms_norm_eps: 1.0e-6
+  
+  # DeepSeek MoE Specifics
+  num_experts: 16
+  num_shared_experts: 2
+  expert_intermediate_size: 1024
+  top_k: 2
+  routing_loss_weight: 0.01
+
+training:
+  steps: 50
+  batch_size: 1
+  sequence_length: 512
+  learning_rate: 2.0e-4
+  weight_decay: 0.1
+  seed: 42
+
+dataset:
+  type: synthetic
+  num_samples: 1000
+
+hardware:
+  backend: tpu
+
+output:
+  base_output_directory: "/content/drive/MyDrive/Deepseek_Analysis/outputs"
+  run_name: "moe_0.9b_tpu"
+
+benchmark:
+  enable_tensorboard: true
+  profiler: "xplane"
